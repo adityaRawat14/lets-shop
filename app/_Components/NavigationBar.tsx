@@ -18,14 +18,17 @@ import Link from "next/link";
 import { Divider, ListItemIcon } from "@mui/material";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 
 
-function NavigationBar({session}:{session:any}) {
+function NavigationBar() {
+  const [session,setSession]=React.useState<any | null>(null)
   const sn=useSession()
   React.useEffect(()=>{
-    console.log("this is sn:",sn);
-    
+    if(sn.status=='authenticated'){
+      setSession(sn);
+    }
   },[sn.status])
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
