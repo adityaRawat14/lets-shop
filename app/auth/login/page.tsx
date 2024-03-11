@@ -1,0 +1,69 @@
+'use client'
+import {loginDataType} from '@/app/_lib/types'
+import React from "react";
+import authImage from "@/public/Images/auth.svg";
+import {useForm} from 'react-hook-form'
+import  {handleLogin} from '@/app/_lib/actions' 
+
+import Link from 'next/link';
+function page() {
+  const {register,handleSubmit,formState:{errors,isSubmitting},setError,getValues}=useForm<loginDataType>();
+
+const onSubmit:any=(data:loginDataType)=>{
+  handleLogin(data)
+}
+
+
+
+  return (
+    <div className="  w-[25rem] border-[2px] rounded-lg flex justify-center items-center flex-col font-sans h-[24rem] border-gray-500 bg-white/20 select-none  shadow-[0px_0px_10px_0px_#ffffff] ">
+      <h1
+        className="text-gray-300 text-[1.6rem] font-sans "
+      >
+        Sign In
+      </h1>
+      <form
+      onSubmit={handleSubmit(onSubmit)}
+        action=""
+        className="flex flex-col w-full p-[2rem] gap-[2rem] text-gray-300"
+       
+      >
+        <div className="flex flex-col gap-[2rem]">
+          <div  className='w-full flex flex-col gap-2 '>
+          <input
+            {...register('email',{required:true})}
+            type="email"
+            className="text-gray-300  w-full bg-transparent border-b-[2px] border-gray-500 outline-none  px-[0.4rem]"
+            placeholder="Enter Email"
+          />
+          {errors.email?.type=='required' && <p>email is required</p> }
+          </div>
+         <div className='w-full flex flex-col gap-2' >
+         <input
+          {...register('password',{required:true,minLength:6})}
+            type="password"
+            className="text-gray-300 w-full  bg-transparent border-b-[2px] px-[0.4rem] border-gray-500 outline-none "
+            placeholder="Enter Password"
+          />
+          { errors.password?.type=='minLength' &&  <p className='text-sm text-red-400'>password must be atleast of 6 characters</p> }
+          { errors.password?.type=='required' &&  <p className='text-sm text-red-400'>password is required</p> }
+         </div>
+        </div>
+        
+        <div className="w-full flex justify-between gap-4 mt-[0.6rem]">
+          <button
+            className="border  border-gray-200 py-[5px] rounded-md text-[0.9rem] hover:bg-gray-800 flex-1 "
+            type="submit"
+          >
+            Sign In
+          </button>
+          <Link href={'/auth/signup'} className="border flex justify-center items-center  border-gray-200 py-[5px] rounded-md text-[0.9rem] hover:bg-gray-800 flex-1 ">
+            Sign up
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default page;
