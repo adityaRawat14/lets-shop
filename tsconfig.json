@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/[...nextauth]/route.js", "app/Context/SessionContextProvider.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/[...nextauth]/route.js", "app/Context/SessionContextProvider.jsx", "app/_lib/DbActions/connectDb.js"],
   "exclude": ["node_modules"]
 }

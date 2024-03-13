@@ -1,36 +1,11 @@
 
 import CategoryCard from "../../_Components/CategoryCard";
 import Image from "next/image";
-import electronics from '@/public/Images/electronics.jpg'
 import bags from '@/public/Images/bags.png'
-import footwears from "@/public/Images/footwear.jpg"
-import groceries from "@/public/Images/groceries.jpg"
-import clothes from "@/public/Images/clothes.jpg"
+import {productCatagories} from '@/app/_lib/ClientActions/actions'
+
+
 export default function Home() {
-
-const categoryCards=[
-  {
-    image:electronics,
-    category:"Electronics",
-    text:["Unleash the power of innovation. Discover the electronics that seamlessly integrate into your life."]
-  },
-  {
-    image:groceries,
-    category:"Groceries",
-    text:["Quality you deserve, prices you'll love. (Appeals to both quality and affordability","Your one-stop shop for all things grocery. (Emphasizes variety and convenience)"]
-  },
-  {
-    image:clothes,
-    category:"Clothes",
-    text:["Dress your story. Find clothes that express you, from timeless classics to trendsetting looks. Shop Shop Name"]
-  },
-  {
-    image:footwears,
-    category:"Footwears",
-    text:["Tired soles? Worn-out style? Find comfort & confidence for every adventure at LetsShop.com."]
-  },
-]
-
 
 
   return (
@@ -48,7 +23,7 @@ const categoryCards=[
     {/* Categories Section */}
     <section className=" items-center   px-4 sm:px-6 lg:px-8 lg:flex gap-[2rem]  md:hide-scrollbar hide-scrollbar  lg:overflow-x-auto ">
     {
-        categoryCards.map((card,index)=>{
+        productCatagories.map((card,index)=>{
           return(
               <div  key={index}  className=" flex-1 px-4 py-[1rem] lg:py-0 hover:translate-y-[-10px] transition-all duration-300">
                   <CategoryCard className=" shadow-[8px_8.0px_8.0px_rgba(0,0,0,0.38)] bg-slate-900 text-white " category={card.category} image={card.image}>

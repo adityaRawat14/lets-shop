@@ -1,12 +1,12 @@
 "use client";
 import * as React from "react";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -16,143 +16,167 @@ import AdbIcon from "@mui/icons-material/Adb";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Link from "next/link";
 import { Divider, ListItemIcon } from "@mui/material";
-import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import { Category, Logout, PersonAdd, Settings } from "@mui/icons-material";
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
-
-
+import { productCatagories } from "../_lib/ClientActions/actions";
+import { usePathname } from "next/navigation";
 
 function NavigationBar() {
-  const [session,setSession]=React.useState<any | null>(null)
-  const sn=useSession()
-  React.useEffect(()=>{
-    if(sn.status=='authenticated'){
+  const [session, setSession] = React.useState<any | null>(null);
+  const pathname=usePathname()
+  const sn = useSession();
+  React.useEffect(() => {
+    if (sn.status == "authenticated") {
+      console.log("this is session", sn);
+
       setSession(sn);
     }
-  },[sn.status])
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  
+  }, [sn.status]);
+  const [anchorElProfile, setAnchorElProfile] =
+    React.useState<null | HTMLElement>(null);
+  const [anchorElCategory, setAnchorElCategory] =
+    React.useState<null | HTMLElement>(null);
+  const openProfile = Boolean(anchorElProfile);
+  const openCategory = Boolean(anchorElCategory);
 
+  const handleClickProfile = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElProfile(event.currentTarget);
+  };
+  const handleCloseProfile = () => {
+    setAnchorElProfile(null);
+  };
+  const handleClickCategory = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElCategory(event.currentTarget);
+  };
+  const handleCloseCategory = () => {
+    setAnchorElCategory(null);
+  };
 
   return (
-    <AppBar  position="sticky" className="bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]">
+    <AppBar
+      position="sticky"
+      className=" bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] select-none"
+    >
       <Container maxWidth="xl">
-        <Toolbar disableGutters className="flex justify-between px-[2rem]" >
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+        <Toolbar disableGutters className="flex justify-between px-[2rem]">
+      {pathname=='/shop/dashboard' ? <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />:
+        <Link href={'/shop/dashboard'} className="text-white border px-3 py-1 rounded-lg border-white bg-transparent">
+
+      Back To  Dashboard
+        
+        </Link>
+      }
           <Typography
             variant="h6"
-   style={{fontFamily:'monospace'}} className=" space-x-2 tracking-widest"
+            style={{ fontFamily: "monospace" }}
+            className=" space-x-2 tracking-widest"
           >
             Lets Shop
           </Typography>
 
-         
-         <Box className="flex justify-center items-center">
-         <Box className="mr-[1.4rem] hover:bg-blue-500 px-3 py-3 rounded-full">
-          <Tooltip title="Open Cart">
-              <Link href={'/cart'}  >
-         <ShoppingCartIcon />
-              </Link>
-            </Tooltip>
+          <Box className="flex justify-center items-center">
+            <Box className="mr-[1.4rem] transition-all duration-150 hover:bg-gray-500 rounded-full">
+              <Tooltip title="categories">
+                <IconButton onClick={handleClickCategory}>
+                  <Category className="text-white"/>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={anchorElCategory}
+                open={openCategory}
+                onClose={handleCloseCategory}
+                onClick={handleCloseCategory}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
 
-          </Box>
-               
-          <Box sx={{ flexGrow: 0 }}>
-            {session? 
-            <Box>
-
-<Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-          >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-          </IconButton>
-        </Tooltip>
-            <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            '&::before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
+                {
+                  productCatagories.map((category,index)=>{
+                    return (
+                <MenuItem key={index} onClick={handleCloseCategory}>
+                <Link href={`/shop/${category.category}`}>
+                 {category.category}
+                </Link> 
+                </MenuItem>
+                 )
+                  })
+                }
+              </Menu>
+            </Box>
+            <Box className="mr-[1.4rem] transition-all duration-150 hover:bg-gray-500  px-3 py-3 rounded-full">
+              <Tooltip title="Open Cart">
+                <Link href={"/shop/cart"}>
+                  <ShoppingCartIcon />
+                </Link>
+              </Tooltip>
             </Box>
 
-
-               :
-               <Tooltip title="login">
-                   <Button href="/auth/login" variant="outlined" className="text-white border-white" >Login</Button>
-               </Tooltip>
-            }
-          
+            <Box sx={{ flexGrow: 0 }}>
+              {session ? (
+                <Box>
+                  <Tooltip title={session.data?.user.email}>
+                    <IconButton
+                      onClick={handleClickProfile}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={openProfile ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openProfile ? "true" : undefined}
+                    >
+                      <Avatar sx={{ width: 32, height: 32 }}>
+                        {session.data?.user.email[0]}
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    anchorEl={anchorElProfile}
+                    id="account-menu"
+                    open={openProfile}
+                    onClose={handleCloseProfile}
+                    onClick={handleCloseProfile}
+                    transformOrigin={{ horizontal: "right", vertical: "top" }}
+                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                  >
+                    <MenuItem onClick={handleCloseProfile}>
+                      <Avatar /> Profile
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseProfile}>
+                      <Avatar /> My account
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleCloseProfile}>
+                      <ListItemIcon>
+                        <PersonAdd fontSize="small" />
+                      </ListItemIcon>
+                      Add another account
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseProfile}>
+                      <ListItemIcon>
+                        <Settings fontSize="small" />
+                      </ListItemIcon>
+                      Settings
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseProfile}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      Logout
+                    </MenuItem>
+                  </Menu>
+                </Box>
+              ) : (
+                <Tooltip title="login">
+                  <Button
+                    href="/auth/login"
+                    variant="outlined"
+                    className="text-white border-white"
+                  >
+                    Login
+                  </Button>
+                </Tooltip>
+              )}
+            </Box>
           </Box>
-         </Box>
-         
         </Toolbar>
       </Container>
     </AppBar>

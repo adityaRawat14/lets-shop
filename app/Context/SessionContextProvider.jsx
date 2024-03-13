@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
-import { getServerData } from '../_lib/actions'
+import { getServerData } from '../_lib/ClientActions/actions'
 const SessionContext=React.createContext(null)
 
 export const useSessionProvider=()=>{

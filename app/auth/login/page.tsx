@@ -1,16 +1,35 @@
 'use client'
-import {loginDataType} from '@/app/_lib/types'
+import {loginDataType} from '@/app/_lib/ClientActions/types'
 import React from "react";
 import authImage from "@/public/Images/auth.svg";
 import {useForm} from 'react-hook-form'
-import  {handleLogin} from '@/app/_lib/actions' 
 
 import Link from 'next/link';
+import { getUserByEmail } from '@/app/_lib/DbActions/actions';
+import { handleLogin } from '@/app/_lib/ClientActions/actions';
+import { CircularProgress } from '@mui/material';
 function page() {
   const {register,handleSubmit,formState:{errors,isSubmitting},setError,getValues}=useForm<loginDataType>();
 
-const onSubmit:any=(data:loginDataType)=>{
-  handleLogin(data)
+const onSubmit:any=async (data:loginDataType)=>{
+  try {
+    const user:any=await getUserByEmail(data.email)
+
+    if(!user){
+
+      setError("root",{type:"userNotExist",message:"user does not exist"})
+    }else{
+    
+    await handleLogin({data,user})
+    }
+    
+  } catch (error) {
+    if(error){
+
+      console.log(error);
+      
+    }
+  }
 }
 
 
@@ -49,13 +68,14 @@ const onSubmit:any=(data:loginDataType)=>{
           { errors.password?.type=='required' &&  <p className='text-sm text-red-400'>password is required</p> }
          </div>
         </div>
-        
+        { errors.root?.type=='userNotExist' &&  <p className='text-sm text-red-400'>{errors.root?.message}</p> }
         <div className="w-full flex justify-between gap-4 mt-[0.6rem]">
           <button
             className="border  border-gray-200 py-[5px] rounded-md text-[0.9rem] hover:bg-gray-800 flex-1 "
             type="submit"
+            disabled={isSubmitting}
           >
-            Sign In
+           { isSubmitting? <CircularProgress size={20} />:'Sign In'}
           </button>
           <Link href={'/auth/signup'} className="border flex justify-center items-center  border-gray-200 py-[5px] rounded-md text-[0.9rem] hover:bg-gray-800 flex-1 ">
             Sign up
