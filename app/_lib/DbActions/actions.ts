@@ -24,3 +24,12 @@ export const getUserByEmail = async (email: string) => {
     return null;
   }
 };
+
+
+export const addToCart=async (product:any,session:any)=>{
+const result=await fetch("http://localhost:3000/api/product/add-cart",{
+  method:'POST',body:JSON.stringify({productId:product.id,userEmail:session.data.user.email})
+})
+const response=await result.json()
+return response;
+}

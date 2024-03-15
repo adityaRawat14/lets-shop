@@ -4,20 +4,19 @@ import React from "react";
 function PaymentBox() {
   const handlePromocode = () => {};
   return (
-    <div className="bg-red w-[28rem] flex flex-col justify-between h-[30rem] shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] px-4 py-4 fixed border-[1px] border-gray-300 rounded-sm ">
+    <div className="bg-red w-[22rem] flex flex-col justify-between h-[30rem] shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] px-4 py-4 fixed border-[1px] border-gray-300 rounded-sm ">
       <div className="flex flex-col gap-[1rem]">
         <div className="flex flex-col gap-2">
           <label
             htmlFor="promocodeInput"
-            className="text-sm font-sans text-gray-600 font-semibold"
-          >
+            className="text-sm font-sans text-gray-600 font-semibold">
             Enter Promocode
           </label>
           <div className="flex gap-1 mb-[3rem]">
             <input
               type="text"
               id="promocodeInput"
-              className="w-[20rem] border-[1px] border-gray-300 font-sans  outline-none px-2"
+              className="w-[15rem] border-[1px] border-gray-300 font-sans  outline-none px-2"
               placeholder="Enter Promocode"
             />
             <button

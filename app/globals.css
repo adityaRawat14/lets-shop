@@ -8,10 +8,11 @@
 }
 
 
-
+body{
+  scroll-behavior: smooth;
+}
 .hide-scrollbar {
   overflow-y: scroll;  /* Enable vertical scrolling */
-  height: 75vh;       /* Adjust height as needed */
 }
 
 /* Hide scrollbar across browsers */

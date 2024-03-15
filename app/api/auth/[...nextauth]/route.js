@@ -26,7 +26,7 @@ export const handler= NextAuth({
         }
         return { name: user.name, email: user.email, userId: user._id };
       } catch (error) {
-        console.log("this is error ");
+        console.log("this is error");
         console.log(error);
       }
       },

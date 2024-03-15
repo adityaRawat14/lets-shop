@@ -18,7 +18,7 @@ function page() {
       <CartItem />
       <CartItem />
     </section>
-    <section className=' '>
+    <section className='flex-grow '>
      <PaymentBox/>
     </section>
    </div>
