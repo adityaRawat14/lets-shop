@@ -6,19 +6,30 @@ export const POST = async function handler(req: NextRequest) {
 
 // check if product alrady in cart
 
+// const checkProduct=await prisma.user.findFirst({
+//  where:{
+//   id:userId
+//  },
+//  include:{
+//   cartProducts:{
+//     where:{
+//      name:productData.name,
+//      productSubCategory:productData.productSubCategory,
+//      productCategory:productData.productCategory
+//     }
+//   }
+//  }
+// })
 const checkProduct=await prisma.user.findFirst({
  where:{
-  id:userId
- },
- include:{
-  cartProducts:{
-    where:{
-     name:productData.name
-    }
+  id:userId,
+  cartProductIds:{
+    has:productData.id
   }
  }
 })
 if(checkProduct){
+  
   return res.json({error:"Product Already in the cart"},{status:400})
 }
 
