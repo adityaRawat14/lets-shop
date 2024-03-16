@@ -16,7 +16,6 @@ const products=await prisma.products.findMany({
 if(!products){
     res.json({error:"server error"},{status:404})
 }
-console.log("these are ",queryCategory , " products ",products);
 
    return res.json({products});
    

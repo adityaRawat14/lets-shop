@@ -38,13 +38,13 @@ export const  productCatagories=[
       image:electronics,
       category:"Electronics",
       text:["Unleash the power of innovation. Discover the electronics that seamlessly integrate into your life."],
-      subCategories:["Mobiles","Laptops","Watches","Speakers","Home Appliances"]
+      subCategories:["Mobiles","Laptops","Watches","Speakers","General"]
     },
     {
       image:groceries,
       category:"Groceries",
       text:["Quality you deserve, prices you'll love. (Appeals to both quality and affordability","Your one-stop shop for all things grocery. (Emphasizes variety and convenience)"],
-      subCategories:["Bevrages","Dairy","Bakery","Vegetables","Fruits"]
+      subCategories:["Bevrages","Dairy","Bakery","Vegetables","Fruits","General"]
     },
     {
       image:clothes,

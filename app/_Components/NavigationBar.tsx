@@ -17,14 +17,14 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import Link from "next/link";
 import {  ListItemIcon, Modal } from "@mui/material";
 import {  Category, Logout } from "@mui/icons-material";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { addProduct, productCatagories } from "../_lib/ClientActions/actions";
 import { usePathname } from "next/navigation";
 import { CircularProgress, Snackbar } from '@mui/material';
 
 function NavigationBar() {
   const [session, setSession] = React.useState<any | null>(null);
-  const [subCategoryList,setSubCategoryList]=React.useState<any[] | null>([])
+  const [subCategoryList,setSubCategoryList]=React.useState<any[] |null>([])
   const [addProductModal,setAddProductModal]=React.useState<boolean>(false);
   const [addProductSubmit,setAddProductSubmit]=React.useState({status:false,message:''})
   const pathname=usePathname()
@@ -74,14 +74,17 @@ function NavigationBar() {
 
 
   const [productData,setProductData]=React.useState({
-    description:{name:'',price:100},quantity:1,productCategory:'Electronics',productSubCategory:'Mobiles'
+    description:{name:'',price:100},quantity:1,productCategory:'Electronics',productSubCategory:"Mobiles"
   })
 
   React.useEffect(() => {
   const el=productCatagories.find((element:any)=>{
    return  (element.category===productData.productCategory)
   })
-  setSubCategoryList(el?.subCategories!)
+  if(el){
+    setSubCategoryList(el.subCategories)
+    setProductData({...productData,productSubCategory:el?.subCategories[0]})
+  }
   }, [productData.productCategory]);
 
 
@@ -172,7 +175,7 @@ function NavigationBar() {
                       aria-haspopup="true"
                       aria-expanded={openProfile ? "true" : undefined}
                     >
-                      <Avatar sx={{ width: 32, height: 32 }}>
+                      <Avatar className="bg-white text-black" sx={{ width: 32, height: 32 }}>
                         {session.data?.user.email[0]}
                       </Avatar>
                     </IconButton>
@@ -195,7 +198,9 @@ function NavigationBar() {
                       <ListItemIcon className="pr-5">
                         <Logout fontSize="small" />
                       </ListItemIcon>
-                      Logout
+                      <button onClick={()=>{signOut()}}>
+                        Logout
+                      </button>
                     </MenuItem>
                   </Menu>
                 </Box>
@@ -255,8 +260,8 @@ function NavigationBar() {
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
                     Subcategory
                 </label>
-                <select value={productData.productSubCategory} onChange={(e)=>{setProductData({...productData,productSubCategory : (e.target.value)})}} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subcategory">
-                    <option value="" disabled>Select Subcategory</option>
+                <select  onChange={(e)=>{setProductData({...productData,productSubCategory : (e.target.value)})}} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subcategory">
+                    <option value="default" disabled>Select Subcategory</option>
                     {
                  subCategoryList?.map((el)=>{
                   return (

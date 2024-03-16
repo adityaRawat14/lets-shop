@@ -35,10 +35,10 @@ setSubCategories(cat?.subCategories!);
 
   return (
     
-    <div className=' flex flex-col bg-gray-100'>
-        <h1 className='w-full text-4xl py-5 px-[4rem] font-mono border border-gray-300'>{category}</h1>
+    <div className=' flex flex-col h-full bg-slate-900 '>
+        <h1 className='w-full text-4xl py-5 px-[4rem] font-mono   bg-gray-900 text-white'>{category}</h1>
         {products==null?
-        <div className='h-screen relative   justify-center items-center bg-gray-100'>
+        <div className='h-screen relative   justify-center items-center '>
           <CircularProgress className='mx-[50vw] my-[30vh]' />
         </div>:
         products?.length==0?

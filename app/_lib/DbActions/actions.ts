@@ -13,10 +13,13 @@ export const getUserByEmail = async (email: string) => {
       return null;
     }
     const user=response.user;
+
+    console.log('this is getUserByEmail function and thsi is user:',user);
+    
     return {
       email: user.email,
       name: user.name,
-      userId: user._id,
+      userId: user.id,
       password: user.password,
     };
   } catch (error) {
@@ -27,8 +30,14 @@ export const getUserByEmail = async (email: string) => {
 
 
 export const addToCart=async (product:any,session:any)=>{
+  console.log("this is product ,",product);
+  console.log("this is sesson",session);
+  
+  
 const result=await fetch("http://localhost:3000/api/product/add-cart",{
-  method:'POST',body:JSON.stringify({productId:product.id,userEmail:session.data.user.email})
+  method:'POST',body:JSON.stringify({productData:product,userId:session.data.user.userId}),headers:{
+    'Content-Type':'application/json'
+  }
 })
 const response=await result.json()
 return response;

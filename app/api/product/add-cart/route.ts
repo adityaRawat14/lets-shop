@@ -2,23 +2,43 @@ import { prisma } from "@/app/_lib/utils/prisma";
 import { NextRequest, NextResponse as res } from "next/server"; 
 
 export const POST = async function handler(req: NextRequest) {
-    const {userEmail,productId,}=await req.json()
+    const {userId,productData}=await req.json()
 
+// check if product alrady in cart
+
+const checkProduct=await prisma.user.findFirst({
+ where:{
+  id:userId
+ },
+ include:{
+  cartProducts:{
+    where:{
+     name:productData.name
+    }
+  }
+ }
+})
+if(checkProduct){
+  return res.json({error:"Product Already in the cart"},{status:400})
+}
+
+  
   try {
 const newUser=await prisma.user.update({ 
 where:{
-  email:userEmail
+  id:userId
 },
 data:{
  
   cartProductIds:{
-    push:productId
+    push:productData.id
   }
 }
 })
 
+
 if(newUser){
-  res.json({message:"Item Added To Cart sucessfully !!"})
+ return res.json({message:"Item Added To Cart sucessfully !!"})
 }
   } catch (error) {
     console.log(error);

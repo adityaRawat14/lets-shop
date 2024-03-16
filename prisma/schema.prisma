@@ -18,8 +18,8 @@ datasource db {
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
-  image         String?   @default("/Images/defaultProfile.png")
+  email         String   @unique
+  image         String?   @default("")
   password      String?
   
 
@@ -71,5 +71,6 @@ enum ProductSubCategory{
   Formals
   Leather
   Speakers
+  General
 }
 
