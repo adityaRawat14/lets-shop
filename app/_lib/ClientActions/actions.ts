@@ -84,3 +84,8 @@ export const addProduct= async  (productdata:any)=>{
 
   return response
 }
+export const getCart= async  (session:any)=>{
+  const result=await fetch(`http://localhost:3000/api/product/fetch-cart?userId=${session.data.user.userId}`)
+  const response=await result.json()
+  return response;
+}

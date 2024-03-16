@@ -1,26 +1,43 @@
+import { prisma } from "@/app/_lib/utils/prisma";
 import { NextRequest, NextResponse as res } from "next/server"; 
-import dbConnect from "@/app/_lib/DbActions/connectDb";
-import User from "@/app/_lib/DbActions/Models/UserModel";
-const bcrypt = require("bcryptjs");
 
 // Export a named export for the POST handler function
 export const GET = async function handler(req: NextRequest) {
 const url=new URL(req.url)
-const userId=url.searchParams.get('userId')
-  await dbConnect();
-
+const userId=url.searchParams.get('userId')!
   try {
    
-    const cartData=await User.findById(userId).populate('Cart')
-    if(!cartData){
+    const cartData=await prisma.user.findFirst({
+        where:{
+          id:userId
+        },
+        select:{
+          cartProducts:{
+            select:{
+              id:true,
+              image:true,
+              name:true,
+              details:true,
+              price:true,
+              quantity:true,
+              productCategory:true,
+              productSubCategory:true
+            }
+          }
+        }
+    })
+
+
+
+    if(cartData?.cartProducts.length==0){
         return res.json({error:"Cart is Empty"},{status:400})
     }
 
-    return res.json({cartData})
+    return res.json(cartData?.cartProducts)
 
   } catch (error) {
     console.log(error);
 
-    return res.json({ error: "An error occurred" }, { status: 500 });
+    return res.json({ error: "Server Issue , Please Try Again.." }, { status: 500 });
   }
 };
