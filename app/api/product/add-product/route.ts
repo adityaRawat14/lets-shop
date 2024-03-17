@@ -41,6 +41,7 @@ data:{
     productCategory,
     productSubCategory,
     quantity,
+    details:description.details
     
 }
 })

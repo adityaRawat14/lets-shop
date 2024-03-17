@@ -76,7 +76,7 @@ function NavigationBar() {
 
 
   const [productData,setProductData]=React.useState({
-    description:{name:'',price:100},quantity:1,productCategory:'Electronics',productSubCategory:"Mobiles"
+    description:{name:'',price:100,details:''},quantity:1,productCategory:'Electronics',productSubCategory:"Mobiles"
   })
 
   React.useEffect(() => {
@@ -244,20 +244,20 @@ function NavigationBar() {
       >
         <Box className=" w-[50rem]  absolute top-0 bottom-0 ">
         <div className="container mx-auto px-4 py-5">
-        <form onSubmit={(e)=>{e.preventDefault()}} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div className="mb-4">
+        <form onSubmit={(e)=>{e.preventDefault()}} className="bg-white shadow-md rounded px-8 pt-4 pb-8 mb-4">
+            <div className="mb-3">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                     Name
                 </label>
                 <input  onChange={(e)=>{setProductData({...productData,description : {...productData.description,name:e.target.value}})}} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="string" placeholder="Name" />
             </div>
-            <div className="mb-4">
+            <div className="mb-3">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
                     Price
                 </label>
                 <input   onChange={(e)=>{setProductData({...productData,description : {...productData.description, price :Number(e.target.value)}})}}  value={productData.description.price} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price" type="number" placeholder="Price" />
             </div>
-            <div className="mb-4">
+            <div className="mb-3">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
                     Category
                 </label>
@@ -287,11 +287,18 @@ function NavigationBar() {
                     }
                 </select>
             </div>
-            <div className="mb-4">
+            <div className="mb-3">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subcategory">
                     Quantity
                 </label>
                 <input value={productData.quantity} onChange={(e)=>{setProductData({...productData,quantity : Number(e.target.value)})}} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="quantity" type="number" placeholder="quantity" />
+              
+            </div>
+            <div className="">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="details">
+                    Details
+                </label>
+                <textarea value={productData.description.details} onChange={(e)=>{setProductData({...productData,description:{...productData.description,details:e.target.value}})}} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="details"  placeholder="Product Details" />
               
             </div>
             <div className="mb-4">

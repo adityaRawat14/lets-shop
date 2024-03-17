@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import ShareIcon from '@mui/icons-material/Share';
 import { FaRupeeSign } from "react-icons/fa";
 import { removeFromCart } from "../_lib/ClientActions/actions";
 import { Snackbar } from "@mui/material";
@@ -20,13 +19,12 @@ function CartItem({product,session}:{product:any,session:any}) {
       
     }
   }
-
   const handleToastClose=()=>{
     setRemoveFromCartError({status:false,message:''})
   }
 const [selectedQuantity,setSelectedQuantity]=useState(1)
   return (
-    <div className="flex w-[60rem] h-[15rem]  rounded-md  border-gray-600  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
+    <div className="flex w-[60rem] h-[15rem]  rounded-md  border-gray-600 shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
     <div className=" border border-gray-500   flex px-6 py-3 font-sans">
       <div className="w-[15rem] h-full bg-blue-500">image section</div>
       <div className=" h-full flex-grow flex px-4 ">

@@ -100,7 +100,7 @@ export const removeFromCart= async  (productData:any,session:any)=>{
 }
 export const addPromocode= async  (amount:number)=>{
   const promocode=v4()
-  const result=await fetch(`http://localhost:3000/api/product/remove-cart`,{
+  const result=await fetch(`http://localhost:3000/api/product/create-promocode`,{
 
     method:'POST',body:JSON.stringify({code:promocode,amount}),headers:{
       'Content-Type':'application/json'
