@@ -1,0 +1,77 @@
+.word-by-word-animation span {
+    display: inline-block;
+    opacity: 1;
+    font-family: 'Brush Script MT', cursive;
+    /* animation: word-by-word-fade-in 4s linear infinite; */
+  }
+  
+  @keyframes word-by-word-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes blink-animation {
+    from {
+      opacity: 0; /* Start with opacity 0 (invisible) */
+    }
+    to {
+      opacity: 1; /* End with opacity 1 (visible) */
+    }
+  }
+
+  
+  .word-by-word-animation span:nth-child(4) {
+    font-size: 120px;
+    opacity: 1;
+    border: 5px;
+    border-color: black;
+    font-family: Copperplate, Papyrus, fantasy;
+    color: rgb(87, 6, 117);
+    animation: word-by-word-fade-in 4s linear infinite;
+    animation-delay: 0s;
+  }
+  
+  @keyframes moveText {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.blink {
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 19px;
+    animation: moveText 7s linear infinite; /* Adjust duration and timing function as needed */
+    white-space: nowrap; /* Prevent text from wrapping */
+    position: absolute; /* Position the text outside the viewport */
+    top: 250px; /* Adjust top position as needed */
+    left: 5; /* Start animation from the left */  
+}
+.care{
+    font-size: 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(10px);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+.care span:nth-child(1){
+    display: inline-block;
+    animation: bounce 0.5s infinite alternate;
+    font-size: 80px;
+    font-family: 'Brush Script MT', cursive;
+
+}
+
+

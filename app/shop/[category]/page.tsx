@@ -44,7 +44,7 @@ setSubCategories(cat?.subCategories!);
         products?.length==0?
         <div className='flex-grow h-screen justify-center flex mt-[4rem] w-screen select-none'>
           <div>
-           {error.status ? <h1 className='font-sans font-bold text-lg text-red-400'>{error.message}</h1>: <h1 className='font-sans font-bold text-white text-lg'>No product Available in this Category !!</h1>}
+           {error.status ? <h1 className='font-cursive font-bold text-lg text-red-400'>{error.message}</h1>: <h1 className='font-monospace font-bold text-white text-lg'>No product Available in this Category !!</h1>}
             
           </div>
         </div>:
