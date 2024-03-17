@@ -64,6 +64,7 @@ export const handler= NextAuth({
             return {...token , userId:newUser.id}
           }
 
+          
           if(googleUser){
             return {...token,userId:googleUser.id}
           }

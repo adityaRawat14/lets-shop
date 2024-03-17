@@ -9,6 +9,7 @@ import { CircularProgress, Snackbar, } from '@mui/material';
  function page() {
 const [cartProducts,setCartProucts]=useState<null | any[]>(null)
 const [cartProductsError,setCartProuctsError]=useState({status:false,message:''})
+const [paymentData,setPaymentData]=useState({totalAmount:0,paymentStatus:false,productData:{}})
 
   const session=useSession()
 const fetchCartProducts=async ()=>{
@@ -51,14 +52,14 @@ if(session.status=='authenticated'){
 
         {cartProducts?.map((product)=>{
           return (
-            <CartItem key={product.id} session={session} product={product} />
+            <CartItem setPaymentData={setPaymentData} paymentData={paymentData} key={product.id} session={session} product={product} />
   
           )
         })}
       </section>
 
     <section className='flex-grow  '>
-     <PaymentBox/>
+     <PaymentBox setPaymentData={setPaymentData} paymentData={paymentData}/>
     </section>
 </div>
       :cartProducts && cartProducts.length==0? 
