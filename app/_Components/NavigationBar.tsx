@@ -135,14 +135,15 @@ function NavigationBar() {
           </Typography>
 
           <Box className="flex justify-center items-center">
-          <Box className="mr-[1.4rem] transition-all duration-150 hover:bg-gray-500  px-3 py-3 rounded-full">
+      {session?.data.user.email=="admin@gmail.com" &&   <Box className="mr-[1.4rem] transition-all duration-150 hover:bg-gray-500  px-3 py-3 rounded-full">
               <Tooltip title="add product to the shop">
               <IconButton onClick={handleClickAddProduct}>
                   <AddBoxIcon className="text-white"/>
                 </IconButton>
               </Tooltip>
               
-            </Box>
+            </Box>}
+
             <Box className="mr-[1.4rem] transition-all duration-150 hover:bg-gray-500 rounded-full">
               <Tooltip title="categories">
                 <IconButton onClick={handleClickCategory}>
