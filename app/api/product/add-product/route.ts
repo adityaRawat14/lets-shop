@@ -34,12 +34,8 @@ if(existingProduct){
     }
 }
 
-
-
-
 const createNewProduct=await prisma.products.create({
 data:{
-
     name:description.name,
     price:description.price,
     productCategory,
@@ -48,8 +44,6 @@ data:{
     
 }
 })
-
-
 if(!createNewProduct){
     return res.json({error:"failed to add product , Try again.."},{status:500})
 }
@@ -58,6 +52,4 @@ console.log(createNewProduct);
 if(createNewProduct){
     return res.json({message:"Product Added Sucessfully"})
 }
-
-
 }

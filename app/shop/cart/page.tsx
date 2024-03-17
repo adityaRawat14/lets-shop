@@ -5,21 +5,27 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PaymentBox from '@/app/_Components/PaymentBox';
 import { useSession } from 'next-auth/react';
 import { getCart } from '@/app/_lib/ClientActions/actions';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Snackbar, } from '@mui/material';
  function page() {
 const [cartProducts,setCartProucts]=useState<null | any[]>(null)
+const [cartProductsError,setCartProuctsError]=useState({status:false,message:''})
+
   const session=useSession()
 const fetchCartProducts=async ()=>{
   const products=await getCart(session)
   if(products.error){
     // handle error
-
+setCartProuctsError({status:true,message:products.error})
   }
   else{
-    setCartProucts(products);
+    setCartProucts(products);   
   }
-  
 }
+
+const handleToastClose=()=>{
+  setCartProuctsError({status:false,message:''})
+}
+
   useEffect(()=>{
 if(session.status=='authenticated'){
   fetchCartProducts()
@@ -27,19 +33,25 @@ if(session.status=='authenticated'){
   },[session.status])
 
   return (
-    <main className='h-full w-full bg-slate-900'>
+    <main className=' w-full bg-slate-900'>
+      <Snackbar
+             open={cartProductsError.status}
+             autoHideDuration={5000}
+             message={cartProductsError.message}
+             onClose={handleToastClose}
+      />
       <span className='flex  items-center border-b-[2px] border-gray-600 text-white'>
       <h1 className='text-[3rem] font-semibold font-mono px-[3rem] py-[0.5rem]  '>Cart</h1>
       <ShoppingCartIcon className='text-[3rem] ' />
       </span> 
    <div className=' flex flex-col gap-6'>
-    {cartProducts?
+    { cartProducts && cartProducts?.length>0 ?
 <div className='flex px-[2rem] py-[2rem] gap-6 '>
       <section className='flex flex-col gap-5'>
 
         {cartProducts?.map((product)=>{
           return (
-            <CartItem key={product.id} product={product} />
+            <CartItem key={product.id} session={session} product={product} />
   
           )
         })}
@@ -49,7 +61,11 @@ if(session.status=='authenticated'){
      <PaymentBox/>
     </section>
 </div>
-      : 
+      :cartProducts && cartProducts.length==0? 
+      <div className='h-screen w-screen text-white font-bold font-sans flex justify-center pt-[4rem] text-[2rem] '>
+        Cart Is Empty !!
+      </div>:
+
       <div className='w-screen  justify-center pt-[6rem] h-screen  flex '>
        <div className='flex flex-col gap-3 items-center '>
         <CircularProgress size={50}/>

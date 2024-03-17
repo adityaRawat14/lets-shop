@@ -29,9 +29,7 @@ const userId=url.searchParams.get('userId')!
 
 
 
-    if(cartData?.cartProducts.length==0){
-        return res.json({error:"Cart is Empty"},{status:400})
-    }
+   
 
     return res.json(cartData?.cartProducts)
 

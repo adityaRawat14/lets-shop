@@ -47,6 +47,15 @@ model Products {
   users         User[]    @relation(fields: [userIds], references: [id])
 }
 
+
+model Promocode{
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    amount      Int?
+    code        String
+    quantity    Int?
+}
+
+
 enum ProductCategory{
   Electronics
   Clothes

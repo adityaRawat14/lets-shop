@@ -4,7 +4,7 @@ import React from "react";
 function PaymentBox() {
   const handlePromocode = () => {};
   return (
-    <div className="bg-red w-[22rem] right-10 flex flex-col text-gray-200 justify-between h-[30rem]  px-4 py-4 sticky top-[4rem] border-[2px]  border-gray-600 rounded-[6px] ">
+    <div className="bg-red w-[22rem] right-10 flex flex-col text-gray-200 justify-between h-[30rem]  px-4 py-4 sticky  top-[4rem] border-[2px]  border-gray-600 rounded-[6px] ">
       <div className="flex flex-col gap-[1rem]">
         <div className="  flex flex-col gap-2">
           <label

@@ -4,7 +4,7 @@ import electronics from '@/public/Images/electronics.jpg'
 import footwears from "@/public/Images/footwear.jpg"
 import groceries from "@/public/Images/groceries.jpg"
 import clothes from "@/public/Images/clothes.jpg"
-
+import { v4 as uuidv4, v4 }from 'uuid';
 
 
 export const handleLogin=async (credentials:any)=>{
@@ -86,6 +86,26 @@ export const addProduct= async  (productdata:any)=>{
 }
 export const getCart= async  (session:any)=>{
   const result=await fetch(`http://localhost:3000/api/product/fetch-cart?userId=${session.data.user.userId}`)
+  const response=await result.json()
+  return response;
+}
+export const removeFromCart= async  (productData:any,session:any)=>{
+  const result=await fetch(`http://localhost:3000/api/product/remove-cart`,{
+    method:'POST',body:JSON.stringify({productData,userId:session.data.user.userId}),headers:{
+      'Content-Type':'application/json'
+    }
+  })
+  const response=await result.json()
+  return response;
+}
+export const addPromocode= async  (amount:number)=>{
+  const promocode=v4()
+  const result=await fetch(`http://localhost:3000/api/product/remove-cart`,{
+
+    method:'POST',body:JSON.stringify({code:promocode,amount}),headers:{
+      'Content-Type':'application/json'
+    }
+  })
   const response=await result.json()
   return response;
 }

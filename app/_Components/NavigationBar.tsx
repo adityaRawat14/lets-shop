@@ -18,15 +18,17 @@ import Link from "next/link";
 import {  ListItemIcon, Modal } from "@mui/material";
 import {  Category, Logout } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
-import { addProduct, productCatagories } from "../_lib/ClientActions/actions";
+import { addProduct, addPromocode, productCatagories } from "../_lib/ClientActions/actions";
 import { usePathname } from "next/navigation";
 import { CircularProgress, Snackbar } from '@mui/material';
+import { FaTag } from "react-icons/fa";
 
 function NavigationBar() {
   const [session, setSession] = React.useState<any | null>(null);
   const [subCategoryList,setSubCategoryList]=React.useState<any[] |null>([])
   const [addProductModal,setAddProductModal]=React.useState<boolean>(false);
   const [addProductSubmit,setAddProductSubmit]=React.useState({status:false,message:''})
+  const [promocodeAmount,setPromocodeAmount]=React.useState(0)
   const pathname=usePathname()
   const sn = useSession();
   React.useEffect(() => {
@@ -92,6 +94,19 @@ function NavigationBar() {
 
     setAddProductSubmit({status:false,message:''})
   }
+  const handleIssuePromocode=async ()=>{
+
+  const response=await  addPromocode(promocodeAmount)
+    if(response.error){
+      setAddProductSubmit({status:true,message:'promocode issued sucessfully'})
+    }
+    else{
+      setAddProductSubmit({message:response.message,status:true})
+      setAddProductModal(false)
+    }
+  }
+
+
 
   return (
     <AppBar
@@ -126,6 +141,7 @@ function NavigationBar() {
                   <AddBoxIcon className="text-white"/>
                 </IconButton>
               </Tooltip>
+              
             </Box>
             <Box className="mr-[1.4rem] transition-all duration-150 hover:bg-gray-500 rounded-full">
               <Tooltip title="categories">
@@ -145,23 +161,23 @@ function NavigationBar() {
                 {
                   productCatagories.map((category,index)=>{
                     return (
-                <MenuItem key={index} onClick={handleCloseCategory}>
-                <Link href={`/shop/${category.category}`}>
+                <Link key={category.category} href={`/shop/${category.category}`}>
+                <MenuItem onClick={handleCloseCategory}>
                  {category.category}
-                </Link> 
                 </MenuItem>
+                </Link> 
                  )
                   })
                 }
               </Menu>
             </Box>
+                <Link href={"/shop/cart"}>
             <Box className="mr-[1.4rem] transition-all duration-150 hover:bg-gray-500  px-3 py-3 rounded-full">
               <Tooltip title="Open Cart">
-                <Link href={"/shop/cart"}>
                   <ShoppingCartIcon />
-                </Link>
               </Tooltip>
             </Box>
+                </Link>
 
             <Box sx={{ flexGrow: 0 }}>
               {session ? (
@@ -269,13 +285,6 @@ function NavigationBar() {
                   )
                  })
                     }
-                    {/* <option value="Mobiles">Mobiles</option>
-                    <option value="Laptops">Laptops</option>
-                    <option value="Winterwear">Winter's</option>
-                    <option value="Summerwear">Summers</option>
-                    <option value="Wemensfootwear">Women's Footwear</option>
-                    <option value="Kidsfootwear">Kid's Footwear</option>
-                    <option value="Mensfootwear">Men's Footwear</option> */}
                 </select>
             </div>
             <div className="mb-4">
@@ -296,6 +305,16 @@ function NavigationBar() {
                 <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleAddProduct}>
                  { addProductSubmit.status? <CircularProgress size={20}/>:  'Add Product'}
                 </button>
+                <div className="flex items-center gap-5">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="promocodeInput" className="text-[10px] text-gray-700">Enter Amount for promocode</label>
+                    <input onChange={(e)=>{setPromocodeAmount(Number(e.target.value))}} id="promocodeInput" className="border-[2px] border-gray-300 outline-none text-[15px] placeholder:text-sm placeholder:font-sans px-2 rounded-lg" type="number" placeholder="amount" />
+                  </div>
+                  <button onClick={handleIssuePromocode} className="bg-yellow-400 flex items-center gap-2 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Generate Promocode
+                    <FaTag/>
+                  </button>
+                </div>
    
             </div>
         </form>

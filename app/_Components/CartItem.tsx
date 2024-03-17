@@ -3,9 +3,24 @@ import React, { useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShareIcon from '@mui/icons-material/Share';
 import { FaRupeeSign } from "react-icons/fa";
+import { removeFromCart } from "../_lib/ClientActions/actions";
+import { Snackbar } from "@mui/material";
 
-function CartItem({product}:{product:any}) {
-const [totalPrice,setTotalPrice]=useState(product.price);
+function CartItem({product,session}:{product:any,session:any}) {
+  const [removeFromCartError,setRemoveFromCartError]=React.useState({status:false,message:''})
+  const deleteProductFromCart=async (product:any)=>{
+ const response=await   removeFromCart(product,session);
+    if(response.error){
+        setRemoveFromCartError({status:true,message:response.error})
+
+    }else{
+      setRemoveFromCartError({status:true,message:response.message})
+    }
+  }
+
+  const handleToastClose=()=>{
+    setRemoveFromCartError({status:false,message:''})
+  }
 const [selectedQuantity,setSelectedQuantity]=useState(1)
   return (
     <div className="flex w-[60rem] h-[15rem]  rounded-md  border-gray-600  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
@@ -22,7 +37,6 @@ const [selectedQuantity,setSelectedQuantity]=useState(1)
           <h1 className="px-3 flex text-green-400 text-2xl items-center gap-4">
           <FaRupeeSign size={15} />
             <span>{product.price}</span> 
-            
           </h1>
         </div>
         
@@ -49,9 +63,14 @@ const [selectedQuantity,setSelectedQuantity]=useState(1)
       </div>
     </div>
     <div className="flex flex-col h-full border border-gray-400 py-3 gap-6 px-[0.4rem] ">
-     <DeleteIcon className=" cursor-pointer hover:text-white  text-gray-500"/>
-     <ShareIcon className="cursor-pointer hover:text-white text-gray-500"/>
+     <DeleteIcon className=" cursor-pointer hover:text-white  text-gray-500" onClick={()=>deleteProductFromCart(product)}/>
     </div>
+    <Snackbar
+        open={removeFromCartError.status}
+        autoHideDuration={5000}
+        message={removeFromCartError.message}
+        onClose={handleToastClose}
+      />
     </div>
   );
 }

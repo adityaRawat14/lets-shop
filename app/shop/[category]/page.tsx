@@ -42,9 +42,9 @@ setSubCategories(cat?.subCategories!);
           <CircularProgress className='mx-[50vw] my-[30vh]' />
         </div>:
         products?.length==0?
-        <div className='flex-grow justify-center flex mt-[4rem] w-screen select-none'>
+        <div className='flex-grow h-screen justify-center flex mt-[4rem] w-screen select-none'>
           <div>
-           {error.status ? <h1 className='font-sans font-bold text-lg text-red-400'>{error.message}</h1>: <h1 className='font-sans font-bold text-lg'>No product Available in this Category !!</h1>}
+           {error.status ? <h1 className='font-sans font-bold text-lg text-red-400'>{error.message}</h1>: <h1 className='font-sans font-bold text-white text-lg'>No product Available in this Category !!</h1>}
             
           </div>
         </div>:

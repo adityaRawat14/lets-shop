@@ -2,7 +2,7 @@ import { prisma } from "@/app/_lib/utils/prisma";
 import { NextRequest, NextResponse as res } from "next/server"; 
 
 export const POST = async function handler(req: NextRequest) {
-    const {userId,productId,}=await req.json()
+    const {userId,productData,}=await req.json()
 
   try {
 const newUser=await prisma.user.update({ 
@@ -12,14 +12,16 @@ where:{
 data:{
     cartProducts:{
         disconnect:{
-            id:productId
+            id:productData.id
         }
     }
 }
 })
 
 if(newUser){
-  res.json({message:"Item Deleted From Cart sucessfully !!"})
+  console.log('item deleted sucessfully');
+  
+ return  res.json({message:"Item Deleted From Cart sucessfully !!"})
 }
   } catch (error) {
     console.log(error);
