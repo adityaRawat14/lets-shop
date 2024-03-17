@@ -28,7 +28,7 @@ function NavigationBar() {
   const [subCategoryList,setSubCategoryList]=React.useState<any[] |null>([])
   const [addProductModal,setAddProductModal]=React.useState<boolean>(false);
   const [addProductSubmit,setAddProductSubmit]=React.useState({status:false,message:''})
-  const [promocodeAmount,setPromocodeAmount]=React.useState(0)
+  const [promocodeAmount,setPromocodeAmount]=React.useState({amount:0,quantity:0})
   const pathname=usePathname()
   const sn = useSession();
   React.useEffect(() => {
@@ -315,9 +315,16 @@ function NavigationBar() {
                 <div className="flex items-center gap-5">
                   <div className="flex flex-col gap-2">
                     <label htmlFor="promocodeInput" className="text-[10px] text-gray-700">Enter Amount for promocode</label>
-                    <input onChange={(e)=>{setPromocodeAmount(Number(e.target.value))}} id="promocodeInput" className="border-[2px] border-gray-300 outline-none text-[15px] placeholder:text-sm placeholder:font-sans px-2 rounded-lg" type="number" placeholder="amount" />
+                    <input onChange={(e)=>{setPromocodeAmount({...promocodeAmount,amount:Number(e.target.value)})}} id="promocodeInput" className="border-[2px] border-gray-300 outline-none text-[15px] placeholder:text-sm placeholder:font-sans px-2 rounded-lg" type="number" placeholder="amount" />
                   </div>
-                  <button onClick={handleIssuePromocode} className="bg-yellow-400 flex items-center gap-2 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                  <select name="" id=""   onChange={(e)=>{setPromocodeAmount({...promocodeAmount,quantity:Number(e.target.value)})}} >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <button onClick={handleIssuePromocode}  className="bg-yellow-400 flex items-center gap-2 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Generate Promocode
                     <FaTag/>
                   </button>

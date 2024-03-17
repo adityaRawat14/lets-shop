@@ -15,6 +15,9 @@ await  signIn('credentials',{payload,redirectTo:'/'})
 console.log("this is value of auth:",auth);
 
 }
+export const handleGoogleLogin=async ()=>{
+    const googleLogin=await signIn('google')
+}
 
 
 export const handleSignup=async (credentials:any)=>{
@@ -98,11 +101,11 @@ export const removeFromCart= async  (productData:any,session:any)=>{
   const response=await result.json()
   return response;
 }
-export const addPromocode= async  (amount:number)=>{
-  const promocode=v4()
+export const addPromocode= async  (promocode:any)=>{
+  const code=v4()
   const result=await fetch(`http://localhost:3000/api/product/create-promocode`,{
 
-    method:'POST',body:JSON.stringify({code:promocode,amount}),headers:{
+    method:'POST',body:JSON.stringify({code,amount:promocode.amount,quantity:promocode.quantity}),headers:{
       'Content-Type':'application/json'
     }
   })

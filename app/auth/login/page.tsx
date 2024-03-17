@@ -1,12 +1,11 @@
 'use client'
 import {loginDataType} from '@/app/_lib/ClientActions/types'
 import React from "react";
-import authImage from "@/public/Images/auth.svg";
 import {useForm} from 'react-hook-form'
-
+import { FaGoogle } from "react-icons/fa";
 import Link from 'next/link';
 import { getUserByEmail } from '@/app/_lib/DbActions/actions';
-import { handleLogin } from '@/app/_lib/ClientActions/actions';
+import { handleGoogleLogin, handleLogin } from '@/app/_lib/ClientActions/actions';
 import { CircularProgress } from '@mui/material';
 function page() {
   const {register,handleSubmit,formState:{errors,isSubmitting},setError,getValues}=useForm<loginDataType>();
@@ -68,7 +67,9 @@ const onSubmit:any=async (data:loginDataType)=>{
           { errors.password?.type=='required' &&  <p className='text-sm text-red-400'>password is required</p> }
          </div>
         </div>
+      
         { errors.root?.type=='userNotExist' &&  <p className='text-sm text-red-400'>{errors.root?.message}</p> }
+        <div className='flex flex-col gap-3 w-full'>
         <div className="w-full flex justify-between gap-4 mt-[0.6rem]">
           <button
             className="border  border-gray-200 py-[5px] rounded-md text-[0.9rem] hover:bg-gray-800 flex-1 "
@@ -81,6 +82,9 @@ const onSubmit:any=async (data:loginDataType)=>{
             Sign up
           </Link>
         </div>
+    <button onClick={handleGoogleLogin} className='w-full flex gap-3 px-3  py-2 hover:bg-gray-800 transition-all duration-150 justify-center items-center  border-[1px] border-white rounded-lg text-sans'><span>Continue with Google</span><FaGoogle size={15}/></button>
+        </div>
+
       </form>
     </div>
   );
