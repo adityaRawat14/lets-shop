@@ -9,12 +9,15 @@ import { Snackbar } from "@mui/material";
 function CartItem({product,session}:{product:any,session:any}) {
   const [removeFromCartError,setRemoveFromCartError]=React.useState({status:false,message:''})
   const deleteProductFromCart=async (product:any)=>{
+
  const response=await   removeFromCart(product,session);
     if(response.error){
         setRemoveFromCartError({status:true,message:response.error})
 
     }else{
+
       setRemoveFromCartError({status:true,message:response.message})
+      
     }
   }
 

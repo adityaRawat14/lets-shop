@@ -64,8 +64,8 @@ if(session.status=='authenticated'){
       :cartProducts && cartProducts.length==0? 
       <div className='h-screen w-screen text-white font-bold font-sans flex justify-center pt-[4rem] text-[2rem] '>
         Cart Is Empty !!
-      </div>:
-
+      </div>
+      :
       <div className='w-screen  justify-center pt-[6rem] h-screen  flex '>
        <div className='flex flex-col gap-3 items-center '>
         <CircularProgress size={50}/>
