@@ -5,8 +5,14 @@ import { FaRupeeSign } from "react-icons/fa";
 import { removeFromCart } from "../_lib/ClientActions/actions";
 import { Snackbar } from "@mui/material";
 
-function CartItem({product,session}:{product:any,session:any}) {
+function CartItem({product,session,paymentData,setPaymentData}:{product:any,session:any,paymentData:any,setPaymentData:any}) {
   const [removeFromCartError,setRemoveFromCartError]=React.useState({status:false,message:''})
+
+  const initializePayment=()=>{
+    setPaymentData({amount:selectedQuantity*product.price,status:true,productData:product})
+  }
+
+
   const deleteProductFromCart=async (product:any)=>{
 
  const response=await   removeFromCart(product,session);
@@ -59,7 +65,7 @@ const [selectedQuantity,setSelectedQuantity]=useState(1)
             {selectedQuantity*product.price}
             </h1>
         </div>
-        <button className="px-3 py-2 font-bold bg-yellow-500 rounded-full hover:bg-yellow-400 hover:border-yellow-800 hover:border-[3px] transition-all duration-200 border-[3px] border-yellow-400">Buy</button>
+        <button onClick={initializePayment} disabled={paymentData.status && paymentData.productData.id==product.id} className="px-3 py-2 font-bold bg-yellow-500 disabled:bg-yellow-800 rounded-full hover:bg-yellow-400 hover:border-yellow-800 hover:border-[3px] transition-all duration-200 border-[3px] border-yellow-400">Buy</button>
       </div>
       </div>
     </div>

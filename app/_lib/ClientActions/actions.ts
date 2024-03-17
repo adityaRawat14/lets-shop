@@ -112,3 +112,15 @@ export const addPromocode= async  (promocode:any)=>{
   const response=await result.json()
   return response;
 }
+export const verifyPromocode= async  (promocode:any)=>{
+  const code=v4()
+  const result=await fetch(`http://localhost:3000/api/product/fetch-promocode?code=${promocode}`,{
+
+    method:'POST',headers:{
+      'Content-Type':'application/json'
+    }
+  })
+
+  const response=await result.json()
+  return response;
+}
