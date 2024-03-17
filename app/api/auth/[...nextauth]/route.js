@@ -24,30 +24,31 @@ export const handler= NextAuth({
         if (!isMatch) {
           return null;
         }
-        return { name: user.name, email: user.email, userId: user._id };
+        return { name: user.name, email: user.email, userId:user.userId };
       } catch (error) {
-        console.log("this is error ");
+        console.log("this is error");
         console.log(error);
       }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+     
+      if(user){
+        return {...token,userId:user.userId }
+      }
+
+      return token
+    },
+    async session({ session, token }) {
+      session.user.userId=token.userId;
+
+      return session
+    }
+  }
 });
 
-//   callbacks: {
-//     async jwt({ token, user }) {
-
-//       if(user){
-//         return {...token }
-//       }
-//       console.log("this is jwt callback;",{token,user});
-//       return token
-//     },
-//     async session({ session, user, token }) {
-//       console.log("this is session callback:",session);
-//       return {expires:session.expires,user:{...session.user}}
-//     }
-// }
 
 // const handler=NextAuth(authOptions)
 

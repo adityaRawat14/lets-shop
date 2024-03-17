@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse as res } from "next/server"; 
-import dbConnect from "@/app/_lib/DbActions/connectDb";
+import {prisma} from '@/app/_lib/utils/prisma'
 import User from "@/app/_lib/DbActions/Models/UserModel";
 const bcrypt = require("bcryptjs");
 
@@ -7,10 +7,12 @@ const bcrypt = require("bcryptjs");
 export const POST = async function handler(req: NextRequest) {
   const { name, email, password } = await req.json();
 
-  await dbConnect();
-
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await prisma.user.findFirst({
+      where:{
+        email
+      }
+    })
     if (existingUser) {
       return res.json({ error: "User already exists" }, { status: 400 });
     }
@@ -18,11 +20,14 @@ export const POST = async function handler(req: NextRequest) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = await User.create({ name, email, password: hashedPassword });
+    const newUser = await prisma.user.create({
+      data:{
+        name,email,password:hashedPassword
+      }
+    });
 
-    await newUser.save();
     
-    return res.json({ userId: newUser._id, email: newUser.email,password:newUser.password }, { status: 200 });
+    return res.json({ userId: newUser.id, email: newUser.email,password:newUser.password }, { status: 200 });
   } catch (error) {
     console.log(error);
 
