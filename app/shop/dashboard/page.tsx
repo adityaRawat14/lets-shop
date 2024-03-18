@@ -4,7 +4,6 @@ import Image from "next/image";
 import bags from '@/public/Images/bags.png'
 import {productCatagories} from '@/app/_lib/ClientActions/actions'
 import './page.css'
-import { Color } from "vscode";
 
 export default function Home() {
   return (
