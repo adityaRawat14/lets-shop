@@ -6,7 +6,7 @@ import PaymentBox from '@/app/_Components/PaymentBox';
 import { useSession } from 'next-auth/react';
 import { getCart } from '@/app/_lib/ClientActions/actions';
 import { CircularProgress, Snackbar, } from '@mui/material';
- function page() {
+ function Page() {
 const [cartProducts,setCartProucts]=useState<null | any[]>(null)
 const [cartProductsError,setCartProuctsError]=useState({status:false,message:''})
 const [paymentData,setPaymentData]=useState({totalAmount:0,paymentStatus:false,productData:{}})
@@ -52,7 +52,7 @@ if(session.status=='authenticated'){
 
         {cartProducts?.map((product)=>{
           return (
-            <CartItem setPaymentData={setPaymentData} paymentData={paymentData} key={product.id} session={session} product={product} />
+            <CartItem  setPaymentData={setPaymentData} paymentData={paymentData} key={product.id} session={session} product={product} />
   
           )
         })}
@@ -82,4 +82,4 @@ if(session.status=='authenticated'){
   )
 }
 
-export default page
+export default Page

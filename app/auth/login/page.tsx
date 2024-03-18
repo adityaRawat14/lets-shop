@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { getUserByEmail } from '@/app/_lib/DbActions/actions';
 import { handleGoogleLogin, handleLogin } from '@/app/_lib/ClientActions/actions';
 import { CircularProgress } from '@mui/material';
-function page() {
+function Page() {
   const {register,handleSubmit,formState:{errors,isSubmitting},setError,getValues}=useForm<loginDataType>();
 
 const onSubmit:any=async (data:loginDataType)=>{
@@ -90,4 +90,4 @@ const onSubmit:any=async (data:loginDataType)=>{
   );
 }
 
-export default page;
+export default Page;

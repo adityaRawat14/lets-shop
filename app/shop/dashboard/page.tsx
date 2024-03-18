@@ -12,7 +12,7 @@ export default function Home() {
       <div className="py-16 px-4 sm:px-6">
           <h1 className="text-6xl font-bold text-gray-900 word-by-word-animation"><span>Welcome </span> <span>to </span> <span>Your</span>   <span className="letter" >Shop</span></h1>
           <p className="mt-4 text-xl font-bold gray-900 blink">Find the best products for your needs.</p>
-          <p className="mt-40 text-xl  black-100 care"> " LET'S <span > CHECK   </span> IT... : ) "</p>
+          <p className="mt-40 text-xl  black-100 care"> " LET'S <span > CHECK   </span> IT... :  "</p>
       </div>
       <Image src={bags} alt="bags" height={400} width={400} className="select-none" />
   </header>

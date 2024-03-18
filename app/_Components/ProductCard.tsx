@@ -3,10 +3,10 @@ import React from 'react'
 import { addToCart } from '../_lib/DbActions/actions'
 import { Snackbar } from '@mui/material'
 import { MdStar } from 'react-icons/md'
-import { HiOutlineArrowCircleRight } from 'react-icons/hi'
 import { MdAddShoppingCart } from "react-icons/md";
 import { FaRupeeSign } from "react-icons/fa";
 import { FaRegImage } from "react-icons/fa6";
+import Image from 'next/image'
 function ProductCard({product}:{product:any}) {
   const session=useSession()
   const [addToCartError,setAddToCartError]=React.useState({status:false,message:''})
@@ -42,11 +42,13 @@ function ProductCard({product}:{product:any}) {
       />
           <div className="flex h-full gap-2 px-3 py-4 hover:shadow-[2px_2px_2px_0px_#edf2f7] transition-all duration-150 rounded-lg border-gray-700 border-[2px] ">
             <div className=" rounded-xl">
-             {product.image? <img
-               src="https://i.imgur.com/zryxaH8.jpg"
+             {product.image?
+              <Image
+               src={product.image}
                alt="Product-Image"
-               className="h-[14rem] object-cover"
-               
+               className=" object-cover"
+               width={100}
+               height={160}
             
               />:
               <div className='h-full w-full justify-center items-center pt-6 text-gray-600'>

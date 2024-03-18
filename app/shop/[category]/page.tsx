@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation'
 import { fetchProductsByCategory, productCatagories } from '@/app/_lib/ClientActions/actions';
 import { CircularProgress } from '@mui/material';
 import CategoryPage from '@/app/_Components/CategoryPage';
- function page() {
+ function Page() {
   const params=useParams()
   const category=params.category;
 
@@ -19,6 +19,7 @@ import CategoryPage from '@/app/_Components/CategoryPage';
       setProducts(response.products)
     }
   }
+  
   useEffect(()=>{
     const cat=productCatagories.find((el)=>{
 return (
@@ -55,4 +56,4 @@ setSubCategories(cat?.subCategories!);
   )
 }
 
-export default page
+export default Page

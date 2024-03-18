@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import Link from "next/link"
 import {useForm} from "react-hook-form"
 import { CircularProgress, Snackbar } from '@mui/material';
-function page() {
+function Page() {
   const {register,handleSubmit,formState:{errors,isSubmitting},setError}=useForm<signupDataType>();
   const [toastOpen,setToastOpen]=useState({status:false,message:''})
   const onSubmit:any=async (data:signupDataType)=>{
@@ -115,4 +115,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

@@ -31,11 +31,14 @@ function NavigationBar() {
   const [promocodeAmount,setPromocodeAmount]=React.useState({amount:0,quantity:0})
   const pathname=usePathname()
   const sn = useSession();
+  
   React.useEffect(() => {
+
     if (sn.status == "authenticated") {
       setSession(sn);
     }
-  }, [sn.status]);
+
+  }, [sn]);
  
   const [anchorElProfile, setAnchorElProfile] =
     React.useState<null | HTMLElement>(null);
@@ -79,15 +82,16 @@ function NavigationBar() {
     description:{name:'',price:100,details:''},quantity:1,productCategory:'Electronics',productSubCategory:"Mobiles"
   })
 
-  React.useEffect(() => {
-  const el=productCatagories.find((element:any)=>{
-   return  (element.category===productData.productCategory)
-  })
-  if(el){
-    setSubCategoryList(el.subCategories)
-    setProductData({...productData,productSubCategory:el?.subCategories[0]})
+  
+  const changeSubcategory=()=>{
+    const el=productCatagories.find((element:any)=>{
+      return  (element.category===productData.productCategory)
+     })
+     if(el){
+       setSubCategoryList(el.subCategories)
+       setProductData({...productData,productSubCategory:el?.subCategories[0]})
+     }
   }
-  }, [productData.productCategory]);
 
 
   const handleToastClose=()=>{
@@ -262,7 +266,7 @@ function NavigationBar() {
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
                     Category
                 </label>
-                <select onChange={(e)=>{setProductData({...productData,productCategory : (e.target.value)})}} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="category">
+                <select onChange={(e)=>{setProductData({...productData,productCategory : (e.target.value)});changeSubcategory()}} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="category">
                   {
                     productCatagories.map((category)=>{
                       return (
