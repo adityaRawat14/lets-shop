@@ -35,7 +35,7 @@ function CategoryPage({
         }
         </section> 
         <div className="flex flex-col w-screen px-[2rem] py-[2rem] ml-[14rem] gap-8 " >
-      {subCategories.map((subCat: string,index) => {
+      {subCategories.map((subCat: string,index:number) => {
         const itemList = seperateCategories(subCat);
         return (
              <section key={index} id={subCat} className="border-[2px] rounded-lg overflow-x-auto  hide-scrollbar  border-gray-800  flex-grow h-[25rem]  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]  ">
@@ -46,7 +46,7 @@ function CategoryPage({
               <div className="flex flex-wrap gap-10">
                 {itemList.map((item: any,index:any) => {
                   return (
-                  <ProductCard key={index} product={item}/>
+                  <ProductCard key={index*item} product={item}/>
                     )
                 })}
               </div>
