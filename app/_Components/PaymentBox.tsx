@@ -15,7 +15,7 @@ function PaymentBox({paymentData,setPaymentData}:{paymentData:any,setPaymentData
   const countPromocodeLength=()=>{
     let length=0;
     for(let i =0;i<promocodeInput.length;i++){
-      if(promocodeInput.charAt(i)!='-'){
+      if(promocodeInput.charAt(i)!='-' ){
         length++;
       }
     }
@@ -38,8 +38,10 @@ useEffect(()=>{
 
 
   const handlePromocode =async () => {
+    console.log(countPromocodeLength());
+    
     if(countPromocodeLength()!=32){
-      setPromocodeError({...promocodeError,status:true,message:"invalid promocode",})
+      setPromocodeError({...promocodeError,status:true,message:"different length",})
     }else{
       const codeResponse=await verifyPromocode(promocodeInput)
       if(codeResponse.error){

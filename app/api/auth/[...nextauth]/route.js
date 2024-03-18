@@ -26,6 +26,7 @@ export const handler= NextAuth({
         if (!isMatch) {
           return null;
         }
+        console.log( { name: user.name, email: user.email, userId:user.userId });;
         return { name: user.name, email: user.email, userId:user.userId };
       } catch (error) {
         console.log("this is error");
@@ -47,12 +48,20 @@ export const handler= NextAuth({
   ],
   callbacks: {
     async jwt({ token, user ,account}) {
-     
-      if(user && account){
+
+      if(user && account.provider=='credentials'){
+        if(user){
+          return {...token,userId:user.userId}
+        }
+      }
+
+      if(user && account.provider=='google'){
         
-        if(account.provider=='google'){
+        
+          console.log("google provider");
           // check user from db
           const googleUser = await prisma.user.findFirst({where:{email:user.email}})
+          console.log("this is googleUser:",googleUser);
           if(!googleUser){
             const newUser=await prisma.user.create({
               data:{
@@ -67,18 +76,17 @@ export const handler= NextAuth({
           
           if(googleUser){
             return {...token,userId:googleUser.id}
-          }
         }
 
       }
-      else if(user){
-        return {...token,userId:user.userId }
-
-      }
-      
-      return token
-    },
+     
+      return {...token};
+    }
+    ,
     async session({ session, token }) {
+
+      console.log("this is session:",session);
+      console.log("this is token from session callback:",token);
       session.user.userId=token.userId;
 
       return session

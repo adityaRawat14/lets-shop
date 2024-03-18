@@ -14,15 +14,17 @@ function ProductCard({product}:{product:any}) {
 
   const handleAddToCart=async (product:any)=>{
     
+    if(session.data?.user?.email){
+      const response:any=await addToCart(product,session)
+      if(response.error){
+       setAddToCartError({status:true,message:response.error})
+      }else{
+       setAddToCartError({status:true,message:'Product added sucessfully!!'})
+      }
+    }else{
+      alert("Please Login If You want to continue")
+    }
     
-    
-   const response:any=await addToCart(product,session)
-   if(response.error){
-    setAddToCartError({status:true,message:response.error})
-   }else{
-    setAddToCartError({status:true,message:'Product added sucessfully!!'})
-   }
-
   }
 
   function handleToastClose(){

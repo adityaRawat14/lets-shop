@@ -322,8 +322,8 @@ function NavigationBar() {
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
                   </select>
                   <button onClick={handleIssuePromocode}  className="bg-yellow-400 flex items-center gap-2 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Generate Promocode
