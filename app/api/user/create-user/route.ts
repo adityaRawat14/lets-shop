@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse as res } from "next/server"; 
 import {prisma} from '@/app/_lib/utils/prisma'
-import User from "@/app/_lib/DbActions/Models/UserModel";
 const bcrypt = require("bcryptjs");
 
-// Export a named export for the POST handler function
 export const POST = async function handler(req: NextRequest) {
   const { name, email, password } = await req.json();
 
